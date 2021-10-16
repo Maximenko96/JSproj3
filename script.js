@@ -13,7 +13,17 @@ P.S. Функции вызывать не обязательно*/
 
 'use strict';
 
-const numberOfFilms = prompt('Сколько фильмов вы уже просмотрели?', '');
+let numberOfFilms;
+
+function start () {
+    numberOfFilms = +prompt('Сколько фильмов вы уже просмотрели?', '');
+
+    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt('Сколько фильмов вы уже просмотрели?', '');
+    }
+}
+
+start();
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -23,27 +33,42 @@ const personalMovieDB = {
     privat: false
 }
 
-for(let i = 0; i < 2; i++) {
-    let a = prompt('Один из последних просмотренных фильмов?'),
-        b = prompt('На сколько оцените его?');
-
-    if (a == '' || b == '' || a == null || b == null || a.length > 50) {
-        i--;
-        console.log('error');
-    } else {
-        personalMovieDB.movies[a] = b;
-        console.log('done');
+function rememberMyFilms () {
+    for(let i = 0; i < 2; i++) {
+        let a = prompt('Один из последних просмотренных фильмов?'),
+            b = prompt('На сколько оцените его?');
+    
+        if (a == '' || b == '' || a == null || b == null || a.length > 50) {
+            i--;
+            console.log('error');
+        } else {
+            personalMovieDB.movies[a] = b;
+            console.log('done');
+        }
     }
 }
 
-if (personalMovieDB.count < 10) {
-    console.log('Просмотрено довольно мало фильмов');
-} else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-    console.log('Вы классический зритель');
-} else if (personalMovieDB.count >= 30) {
-    console.log('Вы киноман');
-} else {
-    console.log('Произошла ошибка');
+rememberMyFilms();
+
+function detectPersonalLevel () {
+    if (personalMovieDB.count < 10) {
+        console.log('Просмотрено довольно мало фильмов');
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+        console.log('Вы классический зритель');
+    } else if (personalMovieDB.count >= 30) {
+        console.log('Вы киноман');
+    } else {
+        console.log('Произошла ошибка');
+    }
 }
+
+function showMyDB (hidden) {
+    if (!hidden) {
+        console.log(`Database is hidden!!`);
+    } else {
+        console.log(personalMovieDB);
+    }
+}
+
 
 console.log(personalMovieDB);
